@@ -1,12 +1,5 @@
-import matplotlib.pyplot as plt
-import numpy as np
 import urllib2
-import time
-import sys
 import re
-
-male = []
-female = []
 
 main_url = 'https://en.wikipedia.org/wiki/List_of_Indian_film_actors'
 
