@@ -64,30 +64,6 @@ if __name__ == "__main__":
         actor_spouse.append(info)
         print (actor, actor_spouse)
 
-# spouse_list = []
-# nspouse_list = []
-# count = 0
-# nSearches = 100
-# for url in actor_url:
-#     # if count <nSearches:
-#     req = urllib2.Request (url)
-#     response = urllib2.urlopen (req)
-#     html = response.read()
-#     if "(<abbr title=\"married\">" in html:
-#         spouses = (html.split("(<abbr title=\"married\">"))
-#         nSpouses = len(spouses) - 1
-#         nspouse_list.append(nSpouses)
-#         print (actor_list[count], nSpouses)
-#         temp = " "
-#         for k in range(nSpouses):
-#             temp = temp + str(spouses[k])[-20:]
-#             spouse_list.append(temp)
-#     else:
-#             spouse_list.append("NA")
-#             nspouse_list.append(0)
-#     count = count + 1
-# print (count)
-
 #Algo 
 #1. google search for <actor starsunfolded"
 #2. go to the starsunfolded url
