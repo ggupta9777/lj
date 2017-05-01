@@ -62,7 +62,7 @@ if __name__ == "__main__":
             else:
                 info = 'no match'
         actor_spouse.append(info)
-        print (actor, actor_spouse)
+        print (actor, info)
 
 #Algo 
 #1. google search for <actor starsunfolded"
