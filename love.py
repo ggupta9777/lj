@@ -22,22 +22,37 @@ def getUnfoldedURL(actor):
     soup = BeautifulSoup(r.text, "html.parser")
     return soup.find('cite').text
 
+def postProcess(actor, info):
+    actor = re.sub("[\(\[].*?[\)\]]", "", actor)
+    actor = actor.replace("'", '').replace(",", "")
+    info = re.sub("[\(\[].*?[\)\]]", "", info)
+    info = info.replace("\n", "")
+    return actor, info
 
 if __name__ == "__main__":
 
+    # getActorNames()
     actor_names = open('actor_names.txt', 'r').read()
     actor_names = actor_names.split()
+
     actor_spouse = []
+    tf = open("actor_spouse.txt", "w")
     for actor in actor_names:
         url = getUnfoldedURL(actor)
         if "starsunfolded" not in url:
-            info = ' no match'
+            info = 'no match'
+            rel = 'no match'
         else:
             if "http" not in url:
                 url = "http://" + url
             req = urllib2.Request (url)
             response = urllib2.urlopen (req)
             html = response.read()
+            if 'Religion</td><td class="column-2"' in html:
+                rel = re.search(r'Religion</td><td class="column-2">(.*?)</td>', html, re.DOTALL).group()
+                rel = BeautifulSoup(rel, "lxml").text[8:]
+            else:
+                rel = 'no match'
             if 'Wife/Spouse</td><td class="column-2">' in html:
                 html = html.split('Wife/Spouse</td>' ,1)[1] 
                 try:
@@ -61,15 +76,7 @@ if __name__ == "__main__":
                     info = 'no match'
             else:
                 info = 'no match'
-        actor_spouse.append(info)
-        print (actor, info)
-
-#Algo 
-#1. google search for <actor starsunfolded"
-#2. go to the starsunfolded url
-#3. return 0 if no url found, decide later
-#3. search for spouse pattern
-#4. remove info between html tags
-#5. get the name and form the database
-#6. religion of actor (can use starsunfolded)
-#7. religion of wife (word matching)
+        actor, info = postProcess(actor, info)
+        # print (actor, info, rel)
+        # tf.write("%s \t ### \t %s \t ### \t %s\n" % (actor, info, rel))
+    tf.close()
